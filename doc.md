@@ -18,57 +18,31 @@ yarn start
 #### 2.src\index.js
 
 ```js
-import React from 'react,;
-
+import React from 'react';
 import ReactDOM from 'react-dom';
-
 import Form, { Field } from 'rc-field-form';
-
 ReactDOM.render(
-
-<Form
-
-initialValues={{username:',,password:',}}
-
-onFinish={values => {
-
-console.log('完成：',values);
-
-}} >
-
+<Form  initialValues={{username:'',password:''}}  onFinish={values=>{
+  console.log('values') }}>
 <Field name="username">
-
-〈input placeholders”用户名"/>
-
-〈/Field〉
-
-〈Field name="password">
-
-〈input placeholders“密码”/>
-
+<input input placeholders='用户名' />
 </Field>
-
-〈button》提交〈/button,
-
+<Field name="password">
+<input placeholders='密码' />
+</Field>
+<button>提交</button>
 </Form>,
-
 document.getElementByld('root')
-
-)；
+);
 ```
 
 ### 3.实现双向数据绑定
 
 #### 3.1 src\index.js
-
-
 ```js
-import React from \* react';
-
-import ReactDOM from 1react-dom';
-
+import React from 'react';
+import ReactDOM from 'react-dom';
 //import Form, { Field } from 'rc-field-form';
-
 import Form,{Field } from './rc-field-form';
 
 ReactDOM.render(
