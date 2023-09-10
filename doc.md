@@ -68,20 +68,13 @@ document.getElementByld('root')
 
 src\rc-field-form\index.js
 
-
 ```js
-import Form from "./Form”;
-
+import Form from "./Form";
 import Field from "./Field";
-
 import useForm from "./useForm";
-
 export default Form;
-
 export {
-
 Field,useForm
-
 }
 ```
 
@@ -89,55 +82,35 @@ Field,useForm
 
 src\rc-field-form\Form.js
 
-
-```jsimport React from "react";
-
-import useForm from "./useForm1';
-
+```js
+import React from "react";
+import useForm from "./useForm";
 import FieldContext from "./FieldContext";
-
 const Form = ({initialvalues,onFinish,children}) => {
-
-const \[forminstance] = useForm();
-
+const [forminstance] = useForm();
 forminstance.setCallbacks({
-
 onFinish
-
-»；
-
+})
 const mountRef = React.useRef(null);
+forminstance.setlnitialValues(initialvalues, !mountRef.current);
 
-forminstance.setlnitialValuesiinitialvalues, !mountRef.current);
+if (!mountRef.current) {
+  mountRef.current = true;
+ }
 
-if (JmountRef.current) {
-
-mountRef.current = true;
-
-}
-
-return (
-
+return(
 <form
-
-onSubmit={event => {
-
+  onSubmit={event => {
 event.preventDefault();
-
 event.stopPropagation();
-
 forminstance.submit();
-
-}>>
-
-\<FieldContext.Provider value={formlnstance>>
-
+}}>
+<FieldContext.Provider value={formlnstance}>
 {children}
-
-\</FieldContext.Provider>
-
+</FieldContext.Provider>
 </form>
-
+)
+}
 export default Form;
 ```
 
