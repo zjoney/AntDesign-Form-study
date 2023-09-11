@@ -5,9 +5,7 @@
 
 ```js
 create-react-app zhufeng_antdesign-form cd zhufeng_antdesign-form
-
 yarn add rc-field-form
-
 yarn start
 ```
 
@@ -18,12 +16,15 @@ yarn start
 #### 2.src\index.js
 
 ```js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Form, { Field } from 'rc-field-form';
+import React from "react";
+import ReactDOM from "react-dom";
+import Form, { Field } from "rc-field-form";
 ReactDOM.render(
-<Form  initialValues={{username:'',password:''}}  onFinish={values=>{
-  console.log('values') }}>
+<Form  
+  initialValues={{username:'',password:''}}  
+  onFinish={values =>{
+  console.log('values') 
+  }}>
 <Field name="username">
 <input input placeholders='用户名' />
 </Field>
@@ -51,7 +52,6 @@ initialValues={{username:'',,password:''}}
 onFinish={values => {
 console.log('完成：'，values);
 }}>
-
 <Field name="username">
   <input placeholder = '用户名'/>
 </Field>
@@ -118,31 +118,26 @@ export default Form;
 
 src\rc-field-form\FieldContext.js
 
-
 ```js
-import React from Mreact";
-
+import React from "react";
 const warningFunc = () => {
-
 console.warn(false,'无法找到FormContext.请确定你是在Form下面使用Field'); }；
 
-const Context = React.createContext({ getFieldValue: warningFunc, getFieldsValue: warningFunc, setFieldsValue: warningFunc, submit: warningFunc,
-
+const Context = React.createContext({ 
+  getFieldValue: warningFunc, 
+  getFieldsValue: warningFunc, 
+  setFieldsValue: warningFunc, 
+  submit: warningFunc,
 })；
-
 export default Context;
 ```
 
 #### 3.5 Field.js
 
 src\rc-field-form\Field.js
-
-
 ```
 import React from "react";
-
 import FieldContext from "./FieldContext";
-
 class Field extends React.Component {
 
 static contextType = FieldContext;
