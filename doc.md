@@ -135,7 +135,7 @@ export default Context;
 #### 3.5 Field.js
 
 src\rc-field-form\Field.js
-```
+```js
 import React from "react";
 import FieldContext from "./FieldContext";
 class Field extends React.Component {
