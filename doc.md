@@ -547,51 +547,64 @@ return [formRef.current];
 src\async-validator.js
 
 
-```class Schema {
-
-constructor(descriptor) { this.descriptor = descriptor;
+```js
+class Schema {
+constructor(descriptor) {
+   this.descriptor = descriptor;
 
 }
 
-validate(values) { return new Promise((resolve,reject) => { let errorFields =\[];
+validate(values) { 
+  return new Promise((resolve,reject) => { 
+    let errorFields =[];
 
-for (let name in this.descriptor) { let rules = this.descriptor\[name]; if (rules) {
+for (let name in this.descriptor) {
+   let rules = this.descriptor[name]; 
+   if (rules) {
 
 let ruleKeys = Object.keys(rules);
 
-let errors =\[];
+let errors =[];
 
-for(let i=0;i\<ruleKeys.length;i++)< let ruleKey = ruleKeys\[i];
+for(let i=0;i<ruleKeys.length;i++){
+   let ruleKey = ruleKeys[i];
 
 if (ruleKey === 'required') {
 
-if (rules\[ruleKey] && lvalues\[name]) { errors.push('\${name} is required');
+if (rules[ruleKey] && !values[name]) { 
+  errors.push(`${name} is required`);
 
 }
 
-} else if (ruleKey === 'type1) {
+} else if (ruleKey === 'type') {
 
-if (typeof values(name] !== rules\[ruleKey]) { errors.push('${name} is not ${rules\[ruleKey]}');
+if (typeof values[name] !== rules[ruleKey]) { 
+  errors.push(`${name} is not ${rules[ruleKey]}`);
 
 }
 
 }else if (ruleKey === 'min') {
 
-if (values\[name].length < rules\[ruleKey]) { errors.push('${name} must be at least ${rules\[ruleKey]} characters' );
+if (values[name].length < rules[ruleKey]) { 
+  errors.push(`${name} must be at least ${rules[ruleKey]} characters` );
 
 }
 
-} } if(errors && errors.length){ errorFields.push({name,errors}); }
+} } 
+if(errors && errors.length){ 
+  errorFields.push({name,errors});
+   }
 
-} ?
+} }
 
-if(errorFields && errorFields.length>0){ reject({errorFields,values});
+if(errorFields && errorFields.length>0){ 
+  reject({errorFields,values});
 
 }else{ resolve(values);
 
 }
 
-})；
+});
 
 }
 
