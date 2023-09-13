@@ -1,7 +1,7 @@
 ### 1.生成项目
 
-*   rc-field-form
-*   async-validator
++   rc-field-form
++   async-validator
 
 ```js
 create-react-app zhufeng_antdesign-form cd zhufeng_antdesign-form
@@ -139,8 +139,7 @@ src\rc-field-form\Field.js
 import React from "react";
 import FieldContext from "./FieldContext";
 class Field extends React.Component {
-
-static contextType = FieldContext;
+  static contextType = FieldContext;
 
 componentDidMount() {
 
@@ -148,11 +147,13 @@ this.context.registerField(this);
 
 }
 
-onStoreChange = () => { this.forceUpdate();
+onStoreChange = () => { 
+  this.forceUpdate();
 
 }；
 
-getControlled = (childProps) => { const {name} = this.props;
+getControlled = (childProps) => { 
+  const {name} = this.props;
 
 const {getFieldValue,setFieldsValue} = this.context;
 
@@ -162,20 +163,21 @@ return {
 
 value: getFieldValue(name),
 
-onChange: event => { setFieldsValue(<\[name]: event.target.value?);
+onChange: event => { 
+  setFieldsValue({[name]: event.target.value});
 
 }
 
-}；
+};
 
-?；
+};
 
-render() { const { children } = this.props; const returnChildNode = React.cloneElement(children, this.getControlledCchildren.props)); return returnChildNode;
-
+render() { 
+  const { children } = this.props; 
+  const returnChildNode = React.cloneElement(children, this.getControlled(children.props));
+   return returnChildNode;
 }
-
-)
-
+}
 export default Field;
 ```
 
@@ -184,19 +186,21 @@ export default Field;
 src\rc-field-form\useForm.js
 
 
-```import React from 'react';
+```js
+import React from 'react';
 
 class FormStore {
 
 store = {};
 
-fieldEntities =\[];
+fieldEntities =[];
 
 initialvalues = {};
 
 callbacks = {};
 
-constructor(forceRootUpdate) { this. forceRootUpdate = forceRootllpdate;
+constructor(forceRootUpdate) { 
+  this. forceRootUpdate = forceRootUpdate;
 
 }
 
@@ -206,19 +210,22 @@ getFieldValue: this.getFieldValue, getFieldsValue: this.getFieldsValue, setField
 
 })；
 
-setinitialvalues = (initialvalues) => { this.store = { ...initialvalues };
+setInitialValues = (initialValues) => { 
+  this.store = { ...initialValues };
 
-}；
+};
 
 setcallbacks = (callbacks) => { this.callbacks = callbacks;
 
-}；
+};
 
-getFieldValue = (name) => { return this.store\[name];
+getFieldValue = (name) => { 
+  return this.store[name];
 
-}；
+};
 
-getFieldsValue = () => { return this.store;
+getFieldsValue = () => { 
+  return this.store;
 
 }
 
@@ -231,16 +238,17 @@ this.fieldEntities.push(entity);
 setFieldsValue = (store) => {
 
 this.store = { ...this.store, ...store };
+this.fieldEntities.forEach(({ onStoreChange }) => { 
+  onStoreChange();
 
-this.fieldEntities.forEach(({ onStoreChange ?) => { onStoreChange();
+});
 
-»；
-
-}；
+};
 
 submit = () => {
 
-const { onFinish } = this.callbacks; if (onFinish) {
+const { onFinish } = this.callbacks; 
+if (onFinish) {
 
 onFinish(this.store);
 
@@ -252,25 +260,28 @@ export default function useForm(form) {
 
 const formRef = React.useRef();
 
-const \[, forceUpdate] = React.useState({});
+const [, forceUpdate] = React.useState({});
 
-if (JformRef.current) {
+if (!formRef.current) {
 
-if (form) { formRef.current = form;
+if (form) { 
+  formRef.current = form;
 
 } else {
 
-const forceReRender = () => { forceUpdate(O);
+const forceReRender = () => { 
+  forceUpdate({});
 
-}；
+};
 
-const formStore = new FormStore(forceReRender); formRef.current = formStore.getForm();
+const formStore = new FormStore(forceReRender); 
+formRef.current = formStore.getForm();
 
 }
 
 }
 
-return \[formRef.current];
+return [formRef.current];
 
 }
 ```
@@ -282,45 +293,42 @@ return \[formRef.current];
 src\index.js
 
 
-```import React from 'react';
+```js
+import React from 'react';
 
-import ReactDOM from 'react-dom,;
+import ReactDOM from 'react-dom';
 
 //import Form, { Field } from 'rc-fieId-form';
 
-import Form,{Field } from \*,/rc-field-form'; ReactDOM.render(
+import Form,{Field } from './rc-field-form'; 
+ReactDOM.render(
 
 <Form
 
 initialValues={{username:'',password:''}}
-
-onFinish={values => { console.log('完成：'，values);
+onFinish={values => { console.log('完成：',values);
 
 }}
 
-*   onFinishFailed={(errorinfo)=>{
-
-*   console, log('失败：'，errorinfo);
-
-*   }}
-
++   onFinishFailed={(errorinfo)=>{
++   console, log('失败：'，errorinfo);
++   }}
 >
 
-*   〈Field name="username" rules={\[{ required: true }]}> \<input placeholder："用户名” />
-
-〈/Field〉
-
-*   〈Field name="passwordM rules={\[{ required: true }]}>
-
-\<input placeholders"密码”/>
++   <Field name="username" rules={[{ required: true }]}> 
+    <input placeholder="用户名" />
+    </Field>
++   <Field name="password" rules={[{ required: true }]}>
+    <input placeholder="密码"  />
 
 </Field>
 
-〈button》提交〈/button〉
+<button>提交</button>
 
-</Form>, document.getElementByld('root')
+</Form>, 
+document.getElementByld('root')
 
-)；
+);
 ```
 
 #### 4.2 Form.js
@@ -328,27 +336,28 @@ onFinish={values => { console.log('完成：'，values);
 src\rc-field-form\Form.js
 
 
-```import React from "react";
+```js
+import React from "react";
 
 import useForm from "./useForm";
 
 import FieldContext from "./FieldContext";
 
-+const Form = (\<initialvalues,onFinish,onFinishFailed,children}) => { const \[forminstance] = useForm();
++const Form = ({initialvalues,onFinish,onFinishFailed,children}) => { 
+  const [formInstance] = useForm();
 
-forminstance.setCallbacks({
-
+formInstance.setCallbacks({
 onFinish,
 
-*   onFinishFailed
++   onFinishFailed
 
-»；
+});
 
 const mountRef = React.useRef(null);
 
-forminstance.setInitialValues(initial.Valuesr JmountRef.current);
+forminstance.setInitialValues(initialValues, !mountRef.current);
 
-if (ImountRef.current) {
+if (!mountRef.current) {
 
 mountRef.current = true;
 
@@ -364,15 +373,15 @@ event,preventDefault();
 
 event.stopPropagation();
 
-forminstance.submit();
+formInstance.submit();
 
-}>>
+}}>
 
-\<FieldContext.Provider value={formlnstance>>
+<FieldContext.Provider value={formlnstance}>
 
 {children}
 
-\</FieldContext.Provider>
+</FieldContext.Provider>
 
 </form>
 
@@ -384,7 +393,8 @@ export default Form;
 src\rc-field-form\useForm.js
 
 
-```import React from \* react,;
+```js
+import React from "react";
 
 import AsyncValidator from './async-validator';
 
@@ -392,7 +402,7 @@ class FormStore {
 
 store = {};
 
-fieldEntities =\[];
+fieldEntities =[];
 
 initialValues = {};
 
@@ -406,19 +416,31 @@ this.forceRootUpdate = forceRootUpdate;
 
 getForm = () => ({
 
-getFieldValue: this.getFieldValue, getFieldsValue: this.getFieldsValue, setFieldsValue: this.setFieldsValue, setlnitialvalues: this.setlnitialValues, setCallbacks: this.setCallbacks, registerField: this.registerField, submit: this.submit, »； setInitialvalues = (initialvalues) => {
+getFieldValue: this.getFieldValue, 
+getFieldsValue: this.getFieldsValue, 
+setFieldsValue: this.setFieldsValue, 
+setlnitialvalues: this.setlnitialValues, 
+setCallbacks: this.setCallbacks, 
+registerField: this.registerField, 
+submit: this.submit,
+}); 
+setInitialvalues = (initialvalues) => {
 
 this.store = { ...initialvalues };
 
-}； setCallbacks = (callbacks) => { this.callbacks = callbacks;
+};
+ setCallbacks = (callbacks) => { 
+  this.callbacks = callbacks;
+
+};
+
+getFieldValue = (name) => { 
+  return this.store[name];
 
 }；
 
-getFieldValue = (name) => { return this.store\[name];
-
-}；
-
-getFieldsValue = () => { return this.store;
+getFieldsValue = () => { 
+  return this.store;
 
 }
 
@@ -426,87 +448,96 @@ registerField = (entity) => {
 
 this.fieldEntities.push(entity);
 
-}； setFieldsValue = (store) => {
+}； 
+setFieldsValue = (store) => {
 
 this.store = { ...this.store, ...store };
 
-this.fieldEntities.forEach(({ onStoreChange ?) => { onStoreChange();
+this.fieldEntities.forEach(({ onStoreChange }) => { 
+  onStoreChange();
 
 })；
 
 }；
 
-*   submit = () => {
++   submit = () => {
 
-*   this.validateFields()
++   this.validateFields()
 
-*   .then(values => {
++   .then(values => {
 
-*   const { onFinish } = this.callbacks;
++   const { onFinish } = this.callbacks;
 
-*   if (onFinish) {
++   if (onFinish) {
 
-*   onFinish(values);
++   onFinish(values);
 
-*   }
++   }
 
-*   ))
++   })
 
-*   .catch(errorlnfo => {
++   .catch(errorlnfo => {
 
-*   const { onFinishFailed } = this.callbacks;
++   const { onFinishFailed } = this.callbacks;
 
-*   if (onFinishFailed) {
++   if (onFinishFailed) {
 
-*   onFinishFailed(errorlnfo);
++   onFinishFailed(errorlnfo);}});
 
-*   validateFields =()=>{
++   validateFields =()=>{
 
-*   let values = this.getFiel.dsVal.ue();
++   let values = this.getFieldsValue();
 
-*   let descriptor = this.fieldEntities.reduce((descriptor,entity)=>{
++   let descriptor = this.fieldEntities.reduce((descriptor,entity)=>{
 
-*   let rules = entity.props.rules;
++   let rules = entity.props.rules;
 
-*   if(rules && rules.length){
++   if(rules && rules.length){
 
-*   let config = rules.reduce((config,rule)=>{
++   let config = rules.reduce((config,rule)=>{
 
-*   config = {...config,...rule};
++   config = {...config,...rule};
 
-*   return config;
++   return config;
 
-*   },{})；
++   },{});
 
-*   descriptor\[entity.props.name]=config;
++   descriptor[entity.props.name]=config;
 
-*   }
++   }
 
-*   return descriptor;
++   return descriptor;
 
-*   },{})；
++   },{});
 
-*   return new AsyncValidator(descriptor).validate(values);
++   return new AsyncValidator(descriptor).validate(values);
 
-*   } }
++   } 
+}
 
-export default function useForm(form) { const formRef = React.useRef();
+export default function useForm(form) {
+   const formRef = React.useRef();
 
-const \[, forceUpdate] = React.useState({}); if (!formRef.current) {
+const [, forceUpdate] = React.useState({}); 
+if (!formRef.current) {
 
-if (form) { formRef.current = form;
+if (form) { 
+  formRef.current = form;
 
-} else { const forceReRender = () => {
+} else { 
+  const forceReRender = () => {
 
 forceUpdate({});
 
-}；
+};
 
 const formStore = new FormStore(forceReRender);
 
-formRef.current = formStore.getForm(); }
+formRef.current = formStore.getForm(); 
+}
 
-} return \[formRef.current];
+} 
+return [formRef.current];
 
 }
 ```
@@ -588,23 +619,23 @@ import Form,{Field } from ',/rc-field-form';
 
 +let uniqueValidator = (rule, value, callback, form) => {
 
-*   return new Promise((resolve,reject)->{
++   return new Promise((resolve,reject)->{
 
-*   setTimeout(()=>{
++   setTimeout(()=>{
 
-*   if(value === 'zhufeng'){
++   if(value === 'zhufeng'){
 
-*   resolve('用户名已经被占用');
++   resolve('用户名已经被占用');
 
-*   }else{
++   }else{
 
-*   resolve(1');
++   resolve(1');
 
-*   }
++   }
 
-*   },3000);
++   },3000);
 
-*   »；
++   »；
 
 +}
 
@@ -612,7 +643,7 @@ ReactDOM.render(
 
 <Form
 
-initialVal.ues={{username:'password: \*'}}
+initialVal.ues={{username:'password: \+'}}
 
 onFinish={values => {
 
@@ -626,7 +657,7 @@ console, log('失败：1,errorinfo);
 
 }} >
 
-*   〈Field name="username“ rules={\[{ required: true },{ min: 3 },{validator:uniqueValidator}]}> \<input placeholder：“用户名”/>
++   〈Field name="username“ rules={\[{ required: true },{ min: 3 },{validator:uniqueValidator}]}> \<input placeholder：“用户名”/>
 
 </Field>
 
@@ -753,7 +784,7 @@ config-overrides.js
 ```js
 const {override,fixBabellmports, addLessLoader} = require('customize-cra'); module.exports = override(
 
-fixBabelImports('import' libraryName:*antd', libraryDirectory:'es', styleitrue
+fixBabelImports('import' libraryName:+antd', libraryDirectory:'es', styleitrue
 
 }),
 
@@ -791,7 +822,7 @@ src\index.js
 
 
 ```js
-import React from * react';
+import React from + react';
 
 import ReactDOM from 'react-dom';
 
