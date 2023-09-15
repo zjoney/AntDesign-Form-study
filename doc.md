@@ -622,17 +622,18 @@ module.exports = Schema;
 src\index.js
 
 
-```import React from 1 react1;
+```js
+import React from 1 react1;
 
 import ReactDOM from 'react-dom,;
 
 //import Form, { Field } from 'rc-fieId-form';
 
-import Form,{Field } from ',/rc-field-form';
+import Form,{Field } from './rc-field-form';
 
 +let uniqueValidator = (rule, value, callback, form) => {
 
-+   return new Promise((resolve,reject)->{
++   return new Promise((resolve,reject)=>{
 
 +   setTimeout(()=>{
 
