@@ -632,62 +632,42 @@ import ReactDOM from 'react-dom,;
 import Form,{Field } from './rc-field-form';
 
 +let uniqueValidator = (rule, value, callback, form) => {
-
 +   return new Promise((resolve,reject)=>{
-
 +   setTimeout(()=>{
-
 +   if(value === 'zhufeng'){
-
 +   resolve('用户名已经被占用');
-
 +   }else{
-
-+   resolve(1');
-
++   resolve('');
 +   }
-
 +   },3000);
 
-+   »；
-
++   });
 +}
 
 ReactDOM.render(
-
 <Form
-
-initialVal.ues={{username:'password: \+'}}
-
+initialValues={{username:'',password: ''}}
 onFinish={values => {
-
 console.log('成功：'，values);
-
 }}
 
 onFinishFailed={(errorinfo)=>{
 
-console, log('失败：1,errorinfo);
+console.log('失败'：,errorinfo);
+}} 
+>
 
-}} >
-
-+   〈Field name="username“ rules={\[{ required: true },{ min: 3 },{validator:uniqueValidator}]}> \<input placeholder：“用户名”/>
-
++ <Field name="username" rules={[{ required: true },{ min: 3 },{validator:uniqueValidator}]}> 
+  <input placeholder="用户名" />
 </Field>
-
-〈Field name^'password" rules={\[{ required: true }]}>
-
-\<input placeholder^"密码”/>
-
+<Field name="password" rules={[{ required: true }]}>
+<input placeholder="密码"  />
 </Field>
-
-〈button〉提交〈/button)
-
+<button>提交</button>
 </Form>,
-
 document.getElementByld('root')
 
-)；
+);
 ```
 
 #### 5.2 async-validator.js
