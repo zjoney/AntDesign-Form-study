@@ -674,7 +674,9 @@ document.getElementByld('root')
 
 src\rc-field-form\async-validator.js
 
-```class Schema { constructor(descriptor) { this.descriptor = descriptor;
+```js
+class Schema { 
+  constructor(descriptor) { this.descriptor = descriptor;
 
 } validate(values) {
 
