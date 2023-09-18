@@ -678,77 +678,78 @@ src\rc-field-form\async-validator.js
 class Schema { 
   constructor(descriptor) { this.descriptor = descriptor;
 
-} validate(values) {
+} 
+validate(values) {
 
-return let for
++ return let for new Promise(async (resolve,reject) => { 
+ + errorFields =[];
 
-new Promise(async (resolve,reject) => { errorFields =[];
+ +if(let name in this.descriptor) {
 
-(let name in this.descriptor) {
++let rules = this.descriptor[name];
 
-let rules = this.descriptor[name];
++if (rules) {
 
-if
++let ruleKeys = Object.keys(rules);
 
-(rules) {
++let errors =[];
 
-let ruleKeys = Object.keys(rules);
++for(let i=0;i<ruleKeys.length;i++){ 
+ + let ruleKey = ruleKeys[i];
 
-let errors =[];
++if (ruleKey === 'required') {
 
-for(let i=0;i<ruleKeys.length;i++){ let ruleKey = ruleKeys[i];
++if(rules[ruleKey] && !values[name]) {
 
-if (ruleKey === ' required') {
++errors.push(`${name} is required`);
 
-if
++}
++} else if (ruleKey === 'type') {
++  if(typeof values[name] !== rules[ruleKey] ){
++    errors.push(`${name} not ${rules[ruleKey]}`);
+ + }
 
-(rules[ruleKey] && lvalues[name]) {
++}else if (ruleKey == 'min') {
 
-errors.push('${name} is
++if (values[name].length < rules[ruleKey]) {
 
-required');
++errors.push(`${name} must be at least ${rules[ruleKey]} characters` );
++ }
 
-![]() 
++}else if (ruleKey === 'validator') {
 
-if (ruleKey —= •type') { (typeof values[name] !== errors.push('${name> is rules[ruleKey]) { not ${rules[ruleKey];
++let validator = rules[ruleKey];
 
-}else if (ruleKey == 'min') {
++let result = await validator(rules[ruleKey], values[name]);
 
-if (values[name].length < rules[ruleKey]) {
++if(result.length>0){
 
-![]()errors.push('${name} must be at least ${rules[ruleKey]} characters' ); }
++errors.push(`${name}不符合自定义验证器的需求!` );
 
-}else if (ruleKey === 'validator') {
-
-let validator = rules[ruleKey];
-
-let result = await validator(rules[ruleKey], values[name]);
-
-if(result.length>0){
-
-errors.push(' ${name}不符合自定义验证器的需求!' );
-
-}
-
-}
++}
++}
 
 if(errors && errors.length){
 
-errorFields.push({name,errors}); }
+errorFields.push({name,errors});
+ }
 
 }
-
-if(errorFields && errorFields.length>0){ reject({errorFields,values});
+}
+if(errorFields && errorFields.length>0){ 
+  reject({errorFields,values});
 
 }else(
 
 resolve(values);
-
+ }
 })；
-
+}
 }
 
-//export default Schema; module.exports = Schema;
+//export default Schema; 
+module.exports = Schema;
+
 ```
 
 ### 6.按需加载
