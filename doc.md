@@ -756,12 +756,11 @@ module.exports = Schema;
 
 #### 6.1.生成项目
 
-
-```create-react-app zhufeng-antdesign-form
-
+```js
+create-react-app zhufeng-antdesign-form
 cd zhufeng-antdesign-form
-
-yarn add react-app-rewired customize-cra babel-plugin-import npm start
+yarn add react-app-rewired customize-cra babel-plugin-import 
+npm start
 ```
 
 #### 6.1 使用 antd
@@ -769,7 +768,7 @@ yarn add react-app-rewired customize-cra babel-plugin-import npm start
 ##### 6.1.1 安装依赖
 
 
-```
+```js
 yarn add react-app-rewired customize-cra babel-plugin-import less less-loader
 ```
 
@@ -779,21 +778,23 @@ config-overrides.js
 
 
 ```js
-const {override,fixBabellmports, addLessLoader} = require('customize-cra'); module.exports = override(
+const {override,fixBabelImports, addLessLoader} = require('customize-cra'); module.exports = override(
 
-fixBabelImports('import' libraryName:+antd', libraryDirectory:'es', styleitrue
-
+fixBabelImports('import',{
+   libraryName:'antd', 
+   libraryDirectory:'es', 
+   style:true
 }),
 
 addLessLoader({
-
 lessOptions:{
-
-javascriptEnabled: true, modifyVars:<'^primary-color':'red'} }
+javascriptEnabled: true, 
+modifyVars:{'@primary-color':'red'} 
+}
 
 })
 
-)；
+);
 ```
 
 ##### 6.1.3 package.json
@@ -801,7 +802,7 @@ javascriptEnabled: true, modifyVars:<'^primary-color':'red'} }
 package.json
 
 
-```js
+```
 + "scripts": {
 
 + ''start": "react-app-rewired start",
