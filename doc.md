@@ -802,14 +802,15 @@ modifyVars:{'@primary-color':'red'}
 package.json
 
 
-```
+```js
 + "scripts": {
 
-+ ''start": "react-app-rewired start",
++ "start": "react-app-rewired start",
 
-+ "build": Mreact-app-rewired build",
++ "build": "react-app-rewired build",
 
-+ "test": "react-app-rewired test", + "eject": "react-app-rewired eject"
++ "test": "react-app-rewired test", 
++ "eject": "react-app-rewired eject"
 
 + }
 ```
@@ -820,15 +821,15 @@ src\index.js
 
 
 ```js
-import React from + react';
+import React from 'react';
 
 import ReactDOM from 'react-dom';
 
 import {Button} from 'antd';
 
 ReactDOM.render(
-
-<Button type="primary”>点击(/Button〉， document.getElementByld('root')
+<Button type="primary">点击</Button>,
+ document.getElementByld('root')
 
 )；
 ```
