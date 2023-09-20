@@ -822,14 +822,12 @@ src\index.js
 
 ```js
 import React from 'react';
-
 import ReactDOM from 'react-dom';
-
 import {Button} from 'antd';
 
 ReactDOM.render(
 <Button type="primary">点击</Button>,
  document.getElementByld('root')
 
-)；
+);
 ```
